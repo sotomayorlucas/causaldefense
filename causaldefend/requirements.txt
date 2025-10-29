@@ -29,7 +29,7 @@ mapie>=0.8.0
 
 # Machine learning utilities
 scikit-learn>=1.5.0
-numpy==1.26.4  # Versión específica estable para Windows
+numpy>=2.3.0  # Use precompiled wheels (required for Python 3.13+ on Windows)
 scipy>=1.13.0
 pandas>=2.2.0
 matplotlib>=3.9.0

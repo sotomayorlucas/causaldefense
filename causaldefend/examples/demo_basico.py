@@ -5,7 +5,12 @@ Demuestra las capacidades básicas sin necesitar checkpoints.
 """
 
 import sys
+import warnings
 from pathlib import Path
+
+# Suprimir warnings de NumPy MINGW (problema conocido en Python 3.13 Windows)
+warnings.filterwarnings('ignore', category=RuntimeWarning, module='numpy')
+warnings.filterwarnings('ignore', message='.*MINGW.*')
 
 
 def print_banner():
@@ -31,6 +36,8 @@ def check_imports():
         checks.append(True)
     except Exception as e:
         print(f"✗ NumPy: {e}")
+        import traceback
+        traceback.print_exc()
         checks.append(False)
     
     # PyTorch
