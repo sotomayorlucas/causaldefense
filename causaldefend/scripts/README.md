@@ -5,14 +5,56 @@ Scripts para entrenar los modelos de CausalDefend desde cero.
 ## 📋 Descripción
 
 Este directorio contiene los scripts necesarios para:
-1. **Generar datasets sintéticos** (cuando DARPA TC no está disponible)
-2. **Entrenar el detector APT** (GAT+GRU)
-3. **Entrenar el CI tester** (Neural Conditional Independence)
-4. **Pipeline completo automatizado**
+1. **Generar datasets sintéticos** (para pruebas rápidas)
+2. **Importar datasets externos** (StreamSpot, DARPA TC, etc.)
+3. **Entrenar el detector APT** (GAT+GRU)
+4. **Entrenar el CI tester** (Neural Conditional Independence)
+5. **Pipeline completo automatizado**
 
 ---
 
-## 🎯 Quick Start (Modo Rápido)
+## 🌟 NUEVO: Usar Datasets Reales
+
+### Opción Recomendada: StreamSpot (~500 MB)
+
+```powershell
+# 1. Descargar StreamSpot (automático)
+python scripts\download_streamspot.py
+
+# 2. Importar al formato de CausalDefend
+python scripts\import_external_dataset.py `
+  --dataset streamspot `
+  --input data\external\streamspot `
+  --output data\processed\streamspot `
+  --max-graphs 100
+
+# 3. Dividir en train/val/test
+python scripts\split_dataset.py `
+  --input data\processed\streamspot `
+  --output data\processed\streamspot_split
+
+# 4. Entrenar con datos reales
+python scripts\train_detector.py `
+  --data data\processed\streamspot_split `
+  --epochs 20 `
+  --output models\streamspot_detector.ckpt
+
+# 5. Evaluar
+python examples\test_detector_advanced.py `
+  --checkpoint models\streamspot_detector.ckpt `
+  --data data\processed\streamspot_split\test
+```
+
+**Resultados Esperados** (según paper):
+- F1-Score: ~0.90
+- Precision: ~0.92
+- Recall: ~0.89
+
+📚 **Más información**: Ver [EXTERNAL_DATASETS.md](../docs/datasets/EXTERNAL_DATASETS.md)
+
+---
+
+## 🎯 Quick Start (Modo Rápido - Datos Sintéticos)
 
 Para entrenar rápidamente con un dataset pequeño (ideal para testing):
 

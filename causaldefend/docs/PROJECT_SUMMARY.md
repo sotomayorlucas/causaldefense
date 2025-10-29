@@ -97,7 +97,7 @@
 - ✅ `API_REFERENCE.md`: API reference
 - ✅ `TRAINING_GUIDE.md`: Guía de entrenamiento
 - ✅ `DEPLOYMENT.md`: Guía de despliegue
-- ✅ `NEXT_STEPS.md`: Roadmap
+- ✅ `status/NEXT_STEPS.md`: Roadmap
 - ✅ `CONTRIBUTING.md`: Guía de contribución
 
 ---
@@ -150,8 +150,8 @@
 #### 15. **Examples & Docs** (5 archivos) ⭐ **NUEVO**
 - ✅ `examples/sample_attack_graph.json`: Grafo de ataque ejemplo
 - ✅ `examples/sample_benign_graph.csv`: Grafo benigno ejemplo
-- ✅ `docs/DATASETS_GUIDE.md`: Guía completa de datasets (400 líneas)
-- ✅ `docs/DATASETS_STATUS.md`: Resumen de implementación
+- ✅ `datasets/DATASETS_GUIDE.md`: Guía completa de datasets (400 líneas)
+- ✅ `datasets/DATASETS_STATUS.md`: Resumen de implementación
 - ✅ `docs/MIGRATION_GUIDE.md`: Guía de migración
 
 ---
@@ -439,12 +439,26 @@ causaldefend/
 │   ├── sample_attack_graph.json    ⭐ NUEVO
 │   └── sample_benign_graph.csv     ⭐ NUEVO
 │
-├── docs/                  # Documentación (10 archivos)
-│   ├── README.md
+├── docs/                  # Documentación
 │   ├── ARCHITECTURE.md
-│   ├── DATASETS_GUIDE.md           ⭐ NUEVO
-│   ├── DATASETS_STATUS.md          ⭐ NUEVO
-│   └── ...
+│   ├── QUICKSTART.md
+│   ├── TRAINING_GUIDE.md
+│   ├── DEPLOYMENT.md
+│   ├── INSTALL_GUIDE.md
+│   ├── GUIA_PRUEBAS.md
+│   ├── datasets/
+│   │   ├── INDEX_DATASETS.md       ⭐ NUEVO
+│   │   ├── DATASETS_GUIDE.md       ⭐ NUEVO
+│   │   ├── DATASETS_STATUS.md      ⭐ NUEVO
+│   │   ├── DATASETS_SETUP_SUMMARY.md
+│   │   ├── QUICKSTART_DATASETS.md
+│   │   ├── EXTERNAL_DATASETS.md
+│   │   └── REFERENCES.md
+│   ├── status/
+│   │   ├── ENTRENAMIENTO_COMPLETADO.md
+│   │   └── NEXT_STEPS.md
+│   └── summary/
+│       └── PROJECT_SUMMARY_ES.md
 │
 ├── data/                  # Datos
 │   ├── processed/         # 200 grafos sintéticos
@@ -631,8 +645,8 @@ causaldefend/
 ### Documentación Interna
 - 📖 [README.md](README.md) - Documentación principal
 - 🏗️ [ARCHITECTURE.md](docs/ARCHITECTURE.md) - Arquitectura detallada
-- 📊 [DATASETS_GUIDE.md](docs/DATASETS_GUIDE.md) - Guía de datasets
-- 📝 [DATASETS_STATUS.md](docs/DATASETS_STATUS.md) - Estado de implementación
+- 📊 [DATASETS_GUIDE.md](datasets/DATASETS_GUIDE.md) - Guía de datasets
+- 📝 [DATASETS_STATUS.md](datasets/DATASETS_STATUS.md) - Estado de implementación
 
 ### Datasets Públicos
 - 🌐 [StreamSpot](https://github.com/sbustreamspot/sbustreamspot-data)

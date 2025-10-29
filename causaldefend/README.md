@@ -298,7 +298,7 @@ python scripts/split_dataset.py \
 
 ### 📖 Complete Guide
 
-For detailed instructions, see [Datasets Guide](docs/DATASETS_GUIDE.md):
+For detailed instructions, see [Datasets Guide](docs/datasets/DATASETS_GUIDE.md):
 - How to download and import external datasets
 - Custom dataset formats and examples
 - Benchmarking against published results
@@ -331,8 +331,8 @@ pytest tests/performance/test_scalability.py --benchmark-only
 Full documentation available at: https://causaldefend.readthedocs.io
 
 ### 🚀 Getting Started
-- **[Quick Start Guide](docs/QUICK_START.md)** - Start in 5 minutes ⚡
-- **[Datasets Guide](docs/DATASETS_GUIDE.md)** - Import external and custom datasets 📊
+- **[Quick Start Guide](docs/QUICKSTART.md)** - Start in 5 minutes ⚡
+- **[Datasets Guide](docs/datasets/DATASETS_GUIDE.md)** - Import external and custom datasets 📊
 - **[Project Summary](docs/PROJECT_SUMMARY.md)** - Complete project overview 🎯
 
 ### 📖 Technical Documentation
@@ -343,9 +343,15 @@ Full documentation available at: https://causaldefend.readthedocs.io
 - [EU AI Act Compliance](docs/COMPLIANCE.md) - Regulatory compliance
 
 ### 📊 Dataset Resources
-- [Datasets Status](docs/DATASETS_STATUS.md) - Implementation status
+- [Datasets Guide](docs/datasets/DATASETS_GUIDE.md) - Import external and custom datasets 📊
+- [Datasets Status](docs/datasets/DATASETS_STATUS.md) - Implementation status
+- [Dataset Index](docs/datasets/INDEX_DATASETS.md) - Navigation hub
 - [Sample Attack Graph](examples/sample_attack_graph.json) - JSON example
 - [Sample Benign Graph](examples/sample_benign_graph.csv) - CSV example
+
+### 📈 Status & Roadmap
+- [Training Completion](docs/status/ENTRENAMIENTO_COMPLETADO.md) - Execution summary (ES)
+- [Next Steps](docs/status/NEXT_STEPS.md) - Implementation roadmap (ES)
 
 ## 🔬 Research
 

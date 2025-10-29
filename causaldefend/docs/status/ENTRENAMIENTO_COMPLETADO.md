@@ -220,7 +220,7 @@ python examples\complete_detection.py
 
 ### Documentación
 - `TRAINING_GUIDE.md`: Guía completa de entrenamiento
-- `NEXT_STEPS.md`: Roadmap de 11-14 semanas
+- [`NEXT_STEPS.md`](NEXT_STEPS.md): Roadmap de 11-14 semanas
 - `scripts/README.md`: Documentación de scripts
 
 ---

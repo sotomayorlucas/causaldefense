@@ -282,7 +282,7 @@ python examples\dashboard.py
 python scripts\import_external_dataset.py --dataset streamspot
 
 # DARPA TC (requiere registro)
-# Ver docs/DATASETS_GUIDE.md para instrucciones
+# Ver datasets/DATASETS_GUIDE.md para instrucciones
 ```
 
 ---

@@ -50,7 +50,7 @@ python scripts\import_local_dataset.py --input examples\sample_benign_graph.csv
 - ✅ Validación de distribución de clases
 - ✅ CLI con `--input`, `--output`, `--train-ratio`, `--val-ratio`, `--test-ratio`, `--seed`
 
-### 4. **Documentación Completa** (`docs/DATASETS_GUIDE.md`)
+### 4. **Documentación Completa** (`DATASETS_GUIDE.md`)
 - ✅ Guía paso a paso para importar datasets
 - ✅ Tabla de benchmarks del paper (F1: 0.982 en DARPA TC)
 - ✅ Instrucciones para reproducir resultados
@@ -189,7 +189,7 @@ ls data\processed\samples\
 3. ✅ `scripts/split_dataset.py` (280 líneas)
 
 ### Documentación (1 nuevo)
-4. ✅ `docs/DATASETS_GUIDE.md` (400 líneas)
+4. ✅ `DATASETS_GUIDE.md` (400 líneas)
 
 ### Ejemplos (2 nuevos)
 5. ✅ `examples/sample_attack_graph.json`

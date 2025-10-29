@@ -72,7 +72,10 @@ causaldefend-serve = "causaldefend.scripts.serve_api:main"
 causaldefend-pipeline = "causaldefend.scripts.run_pipeline:main"
 
 [tool.setuptools]
-packages = ["causaldefend"]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
 
 [tool.black]
 line-length = 100
