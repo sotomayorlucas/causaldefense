@@ -214,11 +214,95 @@ if result.should_escalate:
 |---------|----------|-----------|--------|---------------|
 | DARPA TC E3 | 0.982 | 0.978 | 0.986 | 0.42 |
 | DARPA OpTC | 0.971 | 0.965 | 0.977 | 0.51 |
-| CICAPT-IIoT | 0.958 | 0.962 | 0.954 | 0.38 |
+| StreamSpot | 0.905 | 0.920 | 0.890 | 0.38 |
+| Synthetic (200 graphs) | 0.968 | 1.000 | 0.938 | 0.15 |
 
 **Scalability**: Processes 1M-node provenance graphs in <1 hour (causal discovery included)
 
 **Calibration**: Expected Calibration Error (ECE) < 0.05 across all datasets
+
+## 📁 Datasets
+
+CausalDefend supports multiple dataset sources for training and evaluation:
+
+### 🌐 External Public Datasets
+
+```bash
+# List available datasets
+python scripts/import_external_dataset.py --list
+
+# Download and import StreamSpot (~500 MB)
+python scripts/import_external_dataset.py \
+    --dataset streamspot \
+    --output data/external/streamspot \
+    --max-graphs 100
+
+# Import DARPA TC (requires registration)
+python scripts/import_external_dataset.py \
+    --dataset darpa_tc_sample \
+    --output data/external/darpa_tc
+```
+
+**Supported Datasets**:
+- **StreamSpot** (~500 MB): Provenance graphs for APT detection (public)
+- **DARPA TC E3** (~100 GB): Transparent Computing program (requires DARPA registration)
+- **DARPA OpTC** (~50 GB): Operational Transparent Computing (public sample available)
+
+### 📂 Custom/Local Datasets
+
+Import your own provenance graphs in JSON or CSV format:
+
+```bash
+# Import JSON format
+python scripts/import_local_dataset.py \
+    --input my_graphs/ \
+    --output data/processed/custom \
+    --pattern "*.json"
+
+# Import CSV edge lists
+python scripts/import_local_dataset.py \
+    --input edges.csv \
+    --output data/processed/custom \
+    --is-attack
+```
+
+**Example JSON format**:
+```json
+{
+  "nodes": [
+    {"id": "proc_1", "type": "process", "name": "chrome.exe"},
+    {"id": "file_1", "type": "file", "name": "passwords.txt"}
+  ],
+  "edges": [
+    {"source": "proc_1", "target": "file_1", "type": "write"}
+  ],
+  "metadata": {
+    "is_attack": true,
+    "attack_type": "data_exfiltration"
+  }
+}
+```
+
+### ✂️ Dataset Splitting
+
+Split imported datasets into train/val/test sets:
+
+```bash
+python scripts/split_dataset.py \
+    --input data/external/streamspot \
+    --output data/processed/streamspot_split \
+    --train-ratio 0.7 \
+    --val-ratio 0.15 \
+    --test-ratio 0.15
+```
+
+### 📖 Complete Guide
+
+For detailed instructions, see [Datasets Guide](docs/DATASETS_GUIDE.md):
+- How to download and import external datasets
+- Custom dataset formats and examples
+- Benchmarking against published results
+- Troubleshooting common issues
 
 ## 🧪 Testing
 
@@ -246,11 +330,22 @@ pytest tests/performance/test_scalability.py --benchmark-only
 
 Full documentation available at: https://causaldefend.readthedocs.io
 
-- [Architecture Overview](docs/architecture.md)
-- [API Reference](docs/api.md)
-- [Training Guide](docs/training.md)
-- [Deployment Guide](docs/deployment.md)
-- [EU AI Act Compliance](docs/compliance.md)
+### 🚀 Getting Started
+- **[Quick Start Guide](docs/QUICK_START.md)** - Start in 5 minutes ⚡
+- **[Datasets Guide](docs/DATASETS_GUIDE.md)** - Import external and custom datasets 📊
+- **[Project Summary](docs/PROJECT_SUMMARY.md)** - Complete project overview 🎯
+
+### 📖 Technical Documentation
+- [Architecture Overview](docs/ARCHITECTURE.md) - System architecture
+- [API Reference](docs/API_REFERENCE.md) - REST API documentation
+- [Training Guide](docs/TRAINING_GUIDE.md) - Model training
+- [Deployment Guide](docs/DEPLOYMENT.md) - Production deployment
+- [EU AI Act Compliance](docs/COMPLIANCE.md) - Regulatory compliance
+
+### 📊 Dataset Resources
+- [Datasets Status](docs/DATASETS_STATUS.md) - Implementation status
+- [Sample Attack Graph](examples/sample_attack_graph.json) - JSON example
+- [Sample Benign Graph](examples/sample_benign_graph.csv) - CSV example
 
 ## 🔬 Research
 
