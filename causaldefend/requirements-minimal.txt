@@ -1,0 +1,71 @@
+# ============================================================================
+# CausalDefend - Dependencias Mínimas (Core Functionality)
+# ============================================================================
+# Instalación rápida con las dependencias esenciales
+# Para instalación completa, usar requirements.txt
+
+# Deep Learning (Core)
+torch>=2.6.0
+torchvision>=0.21.0
+pytorch-lightning>=2.4.0
+torch-geometric>=2.6.0
+
+# Graph Processing (Core)
+networkx>=3.3
+
+# Causal Inference (Core)
+causal-learn>=0.1.3.8
+pgmpy>=0.1.25
+
+# Uncertainty Quantification
+mapie>=0.8.0
+
+# Machine Learning Utilities
+scikit-learn>=1.5.0
+numpy==1.26.4  # Versión específica para evitar problemas MINGW en Windows
+scipy>=1.13.0
+pandas>=2.2.0
+
+# API Framework
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+pydantic>=2.9.0
+python-multipart>=0.0.12
+
+# Authentication
+python-jose[cryptography]>=3.3.0
+passlib[bcrypt]>=1.7.4
+pyjwt>=2.9.0
+cryptography>=43.0.0
+
+# Database
+sqlalchemy>=2.0.35
+
+# Caching
+redis>=5.2.0
+
+# Message Queue
+celery>=5.4.0
+
+# Configuration
+pyyaml>=6.0.2
+python-dotenv>=1.0.1
+
+# Logging
+loguru>=0.7.2
+
+# Template Engine
+jinja2>=3.1.4
+
+# Utilities
+tqdm>=4.67.0
+click>=8.1.7
+rich>=13.9.0
+
+# Testing (Basic)
+pytest>=8.3.0
+pytest-asyncio>=0.24.0
+
+# Code Quality (Basic)
+black>=24.10.0
+isort>=5.13.0

@@ -1,0 +1,287 @@
+#!/usr/bin/env python3
+"""
+Setup script for CausalDefend project.
+
+This script helps with initial setup, dependency installation, and configuration.
+"""
+
+import os
+import subprocess
+import sys
+from pathlib import Path
+
+
+def print_step(message: str) -> None:
+    """Print step message"""
+    print(f"\n{'='*70}")
+    print(f"  {message}")
+    print(f"{'='*70}\n")
+
+
+def run_command(cmd: str, description: str) -> bool:
+    """Run shell command and handle errors"""
+    print(f"Running: {description}")
+    print(f"Command: {cmd}\n")
+    
+    result = subprocess.run(cmd, shell=True, capture_output=True, text=True)
+    
+    if result.returncode != 0:
+        print(f"❌ Error: {description} failed")
+        print(f"STDOUT: {result.stdout}")
+        print(f"STDERR: {result.stderr}")
+        return False
+    else:
+        print(f"✅ Success: {description}")
+        if result.stdout:
+            print(result.stdout)
+        return True
+
+
+def check_python_version() -> bool:
+    """Check Python version >= 3.10"""
+    print_step("Checking Python Version")
+    
+    version = sys.version_info
+    if version.major == 3 and version.minor >= 10:
+        print(f"✅ Python {version.major}.{version.minor}.{version.micro} detected")
+        return True
+    else:
+        print(f"❌ Python 3.10+ required, found {version.major}.{version.minor}.{version.micro}")
+        return False
+
+
+def check_cuda() -> bool:
+    """Check CUDA availability"""
+    print_step("Checking CUDA")
+    
+    try:
+        result = subprocess.run(
+            "nvidia-smi",
+            shell=True,
+            capture_output=True,
+            text=True
+        )
+        if result.returncode == 0:
+            print("✅ CUDA available")
+            print(result.stdout)
+            return True
+        else:
+            print("⚠️  CUDA not detected (CPU-only mode)")
+            return False
+    except Exception as e:
+        print(f"⚠️  Could not check CUDA: {e}")
+        return False
+
+
+def create_virtual_environment() -> bool:
+    """Create Python virtual environment"""
+    print_step("Creating Virtual Environment")
+    
+    if Path("venv").exists():
+        print("⚠️  Virtual environment already exists")
+        return True
+    
+    return run_command(
+        f"{sys.executable} -m venv venv",
+        "Create virtual environment"
+    )
+
+
+def install_dependencies() -> bool:
+    """Install Python dependencies"""
+    print_step("Installing Dependencies")
+    
+    # Determine pip command
+    if os.name == 'nt':  # Windows
+        pip_cmd = "venv\\Scripts\\pip"
+    else:  # Unix
+        pip_cmd = "venv/bin/pip"
+    
+    # Upgrade pip
+    if not run_command(
+        f"{pip_cmd} install --upgrade pip",
+        "Upgrade pip"
+    ):
+        return False
+    
+    # Install requirements
+    if not run_command(
+        f"{pip_cmd} install -r requirements.txt",
+        "Install requirements"
+    ):
+        return False
+    
+    # Install package in development mode
+    if not run_command(
+        f"{pip_cmd} install -e .",
+        "Install causaldefend package"
+    ):
+        return False
+    
+    return True
+
+
+def download_models() -> bool:
+    """Download pre-trained models and data"""
+    print_step("Downloading Models and Data")
+    
+    # Create directories
+    os.makedirs("models", exist_ok=True)
+    os.makedirs("data", exist_ok=True)
+    
+    # Determine python command
+    if os.name == 'nt':
+        python_cmd = "venv\\Scripts\\python"
+    else:
+        python_cmd = "venv/bin/python"
+    
+    # Download spaCy model
+    return run_command(
+        f"{python_cmd} -m spacy download en_core_web_sm",
+        "Download spaCy model"
+    )
+
+
+def setup_database() -> bool:
+    """Setup PostgreSQL database"""
+    print_step("Setting Up Database")
+    
+    print("⚠️  Manual step required:")
+    print("1. Install PostgreSQL 14+")
+    print("2. Create database: createdb causaldefend")
+    print("3. Update DATABASE_URL in .env file")
+    print("\nPress Enter to continue...")
+    input()
+    
+    return True
+
+
+def setup_redis() -> bool:
+    """Setup Redis"""
+    print_step("Setting Up Redis")
+    
+    print("⚠️  Manual step required:")
+    print("1. Install Redis 7+")
+    print("2. Start Redis server: redis-server")
+    print("3. Update REDIS_URL in .env file")
+    print("\nPress Enter to continue...")
+    input()
+    
+    return True
+
+
+def create_env_file() -> bool:
+    """Create .env file from template"""
+    print_step("Creating Environment File")
+    
+    env_path = Path(".env")
+    example_path = Path(".env.example")
+    
+    if env_path.exists():
+        print("⚠️  .env file already exists")
+        return True
+    
+    if not example_path.exists():
+        print("❌ .env.example not found")
+        return False
+    
+    # Copy example to .env
+    with open(example_path, 'r') as src:
+        content = src.read()
+    
+    with open(env_path, 'w') as dst:
+        dst.write(content)
+    
+    print("✅ Created .env file from template")
+    print("⚠️  Please edit .env and fill in actual values")
+    
+    return True
+
+
+def run_tests() -> bool:
+    """Run test suite"""
+    print_step("Running Tests")
+    
+    if os.name == 'nt':
+        pytest_cmd = "venv\\Scripts\\pytest"
+    else:
+        pytest_cmd = "venv/bin/pytest"
+    
+    return run_command(
+        f"{pytest_cmd} tests/ -v",
+        "Run test suite"
+    )
+
+
+def print_next_steps() -> None:
+    """Print next steps for user"""
+    print_step("Setup Complete!")
+    
+    print("Next steps:\n")
+    print("1. Activate virtual environment:")
+    if os.name == 'nt':
+        print("   venv\\Scripts\\activate")
+    else:
+        print("   source venv/bin/activate")
+    
+    print("\n2. Edit .env file with your configuration")
+    
+    print("\n3. Setup database:")
+    print("   createdb causaldefend")
+    print("   alembic upgrade head")
+    
+    print("\n4. Train detector:")
+    print("   causaldefend-train --config config/train_config.yaml")
+    
+    print("\n5. Start API server:")
+    print("   causaldefend-serve")
+    
+    print("\n6. Or use Docker:")
+    print("   docker-compose up -d")
+    
+    print("\nFor more information, see README.md\n")
+
+
+def main():
+    """Main setup function"""
+    print("""
+    ╔═══════════════════════════════════════════════════════════╗
+    ║                                                           ║
+    ║              CausalDefend Setup Script                    ║
+    ║      Explainable and Compliant APT Detection              ║
+    ║                                                           ║
+    ╚═══════════════════════════════════════════════════════════╝
+    """)
+    
+    # Check prerequisites
+    if not check_python_version():
+        sys.exit(1)
+    
+    check_cuda()  # Warning only, not required
+    
+    # Setup steps
+    steps = [
+        (create_virtual_environment, "Create virtual environment"),
+        (install_dependencies, "Install dependencies"),
+        (download_models, "Download models"),
+        (create_env_file, "Create environment file"),
+        (setup_database, "Setup database"),
+        (setup_redis, "Setup Redis"),
+    ]
+    
+    for step_func, step_name in steps:
+        if not step_func():
+            print(f"\n❌ Setup failed at: {step_name}")
+            sys.exit(1)
+    
+    # Optional: Run tests
+    print("\nWould you like to run the test suite? (y/n): ", end="")
+    if input().strip().lower() == 'y':
+        run_tests()
+    
+    # Print next steps
+    print_next_steps()
+
+
+if __name__ == "__main__":
+    main()

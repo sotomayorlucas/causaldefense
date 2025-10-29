@@ -1,0 +1,87 @@
+# API Server Configuration
+
+# Server settings
+server:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  reload: false
+  log_level: "info"
+
+# Security
+security:
+  secret_key: "${SECRET_KEY}"  # Set via environment variable
+  algorithm: "HS256"
+  access_token_expire_minutes: 30
+  
+  # CORS
+  cors_origins:
+    - "http://localhost:3000"
+    - "http://localhost:8000"
+  cors_allow_credentials: true
+  cors_allow_methods: ["*"]
+  cors_allow_headers: ["*"]
+  
+  # Rate limiting
+  rate_limit:
+    enabled: true
+    requests_per_minute: 60
+
+# Database
+database:
+  url: "${DATABASE_URL}"
+  pool_size: 10
+  max_overflow: 20
+  echo: false
+
+# Redis
+redis:
+  url: "${REDIS_URL}"
+  db: 0
+  decode_responses: true
+
+# Celery
+celery:
+  broker_url: "${REDIS_URL}"
+  result_backend: "${REDIS_URL}"
+  task_serializer: "json"
+  result_serializer: "json"
+  accept_content: ["json"]
+  timezone: "UTC"
+  enable_utc: true
+
+# Model inference
+inference:
+  model_path: "models/causaldefend-v1"
+  device: "cuda"
+  batch_size: 32
+  timeout_seconds: 300
+
+# Causal discovery
+causal:
+  k_hop: 2
+  temporal_window_hours: 2
+  blast_radius_threshold: 0.1
+  target_reduction: 0.9
+  
+  # PC-Stable settings
+  max_degree: 3
+  significance_level: 0.05
+
+# Uncertainty quantification
+uncertainty:
+  confidence_level: 0.95
+  calibration_window_size: 1000
+  escalation_threshold: 0.8
+
+# Compliance
+compliance:
+  enable_audit_log: true
+  audit_log_path: "logs/audit.jsonl"
+  blockchain_anchoring: false
+
+# Monitoring
+monitoring:
+  prometheus_port: 9090
+  enable_tracing: true
+  log_requests: true
