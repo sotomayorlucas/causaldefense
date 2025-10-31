@@ -13,6 +13,19 @@ Este directorio contiene los scripts necesarios para:
 
 ---
 
+## 🧰 Utilidades clave
+
+| Script | Descripción |
+|--------|-------------|
+| `quick_start.py` | Asistente interactivo para ejecutar demos, API y documentación |
+| `verify_installation.py` | Diagnóstico rápido de dependencias y entorno |
+| `fix_numpy.py` | Solución automática para incidencias con NumPy en Windows |
+| `run_demo_safe.py` | Wrapper que ejecuta el demo básico silenciando warnings |
+
+> Ejecuta cualquiera de ellos con `python scripts/<script>.py`
+
+---
+
 ## 🌟 NUEVO: Usar Datasets Reales
 
 ### Opción Recomendada: StreamSpot (~500 MB)

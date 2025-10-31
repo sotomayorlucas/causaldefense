@@ -79,7 +79,7 @@ def main():
         print("✅ NumPy instalado correctamente!")
         print("="*70)
         print("\nAhora puedes ejecutar:")
-        print("  python quick_start.py")
+        print("  python scripts/quick_start.py")
         print("  python examples/basic_usage.py")
     else:
         print("\n" + "="*70)

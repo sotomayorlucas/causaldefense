@@ -9,6 +9,10 @@ import sys
 from pathlib import Path
 
 
+SCRIPT_DIR = Path(__file__).resolve().parent
+REPO_ROOT = SCRIPT_DIR.parent
+
+
 def print_banner():
     """Print welcome banner"""
     banner = """
@@ -48,9 +52,10 @@ def verify_installation():
     try:
         import subprocess
         result = subprocess.run(
-            [sys.executable, "verify_installation.py"],
+            [sys.executable, str(SCRIPT_DIR / "verify_installation.py")],
             capture_output=False,
-            text=True
+            text=True,
+            cwd=REPO_ROOT
         )
         return result.returncode == 0
     except Exception as e:
@@ -67,9 +72,9 @@ def run_basic_demo():
         main()
     except Exception as e:
         print(f"❌ Demo failed: {e}")
-        print("\nMake sure you have:")
-        print("  1. Installed all dependencies: pip install -r requirements.txt")
-        print("  2. Installed the package: pip install -e .")
+    print("\nMake sure you have:")
+    print("  1. Installed all dependencies: pip install -r requirements.txt")
+    print("  2. Installed the package: pip install -e .")
 
 
 def run_complete_demo():
@@ -261,19 +266,19 @@ def open_documentation():
     
     docs = [
         ("README.md", "Project overview and quick start"),
-        ("STRUCTURE.md", "Detailed architecture and code organization"),
-        ("QUICKSTART.md", "Step-by-step tutorial"),
-        ("DEPLOYMENT.md", "Production deployment guide"),
+        ("docs/ARCHITECTURE.md", "Detailed architecture and code organization"),
+        ("docs/QUICKSTART.md", "Step-by-step tutorial"),
+        ("docs/TRAINING_GUIDE.md", "Model training and evaluation"),
+        ("docs/DEPLOYMENT.md", "Production deployment guide"),
         ("CONTRIBUTING.md", "Development and contribution guidelines"),
-        ("PROJECT_SUMMARY.md", "Complete project summary"),
-        ("docs/", "Additional documentation"),
+        ("docs/datasets/INDEX_DATASETS.md", "Dataset documentation hub"),
+        ("docs/status/ENTRENAMIENTO_COMPLETADO.md", "Training status report"),
+        ("scripts/README.md", "Automation and dataset scripts"),
         ("examples/", "Code examples and demos"),
     ]
-    
-    base_path = Path(__file__).parent
-    
+
     for doc, description in docs:
-        path = base_path / doc
+        path = REPO_ROOT / doc
         status = "✓" if path.exists() else "✗"
         print(f"{status} {doc:25s} - {description}")
     

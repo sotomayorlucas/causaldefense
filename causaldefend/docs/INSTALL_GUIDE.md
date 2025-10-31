@@ -86,7 +86,7 @@ python -c "import torch_geometric; print(f'PyG: {torch_geometric.__version__}')"
 python -c "import fastapi; print(f'FastAPI: {fastapi.__version__}')"
 
 # O ejecutar script de verificación completo
-python verify_installation.py
+python scripts/verify_installation.py
 ```
 
 ## Problemas Comunes y Soluciones
@@ -202,10 +202,10 @@ Una vez instaladas las dependencias:
 
 ```powershell
 # 1. Verificar instalación
-python verify_installation.py
+python scripts/verify_installation.py
 
 # 2. Ejecutar quick start
-python quick_start.py
+python scripts/quick_start.py
 
 # 3. O ejecutar ejemplo básico
 python examples/basic_usage.py

@@ -4,8 +4,15 @@ Complete Usage Example for CausalDefend
 Demonstrates end-to-end APT detection pipeline.
 """
 
+import sys
+import io
 import logging
 from pathlib import Path
+
+# Set UTF-8 encoding for stdout (Windows compatibility)
+if sys.platform == 'win32':
+    sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+    sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
 
 # Configure logging
 logging.basicConfig(

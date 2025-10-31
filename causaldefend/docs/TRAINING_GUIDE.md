@@ -207,7 +207,7 @@ tensorboard --logdir logs
 python examples\demo_basico.py
 
 # Verificar instalación
-python verify_installation.py
+python scripts/verify_installation.py
 ```
 
 ---

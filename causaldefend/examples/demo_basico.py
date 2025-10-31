@@ -328,9 +328,9 @@ def main():
     if not check_imports():
         print("\n❌ Algunos imports fallaron.")
         print("\nSoluciones:")
-        print("  1. Ejecuta: python fix_numpy.py")
+        print("  1. Ejecuta: python scripts/fix_numpy.py")
         print("  2. Reinstala: pip install -r requirements-minimal.txt")
-        print("  3. Verifica: python verify_installation.py")
+        print("  3. Verifica: python scripts/verify_installation.py")
         return 1
     
     print("\n✅ Todas las dependencias básicas están OK!\n")

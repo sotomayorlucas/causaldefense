@@ -19,156 +19,17 @@ El sistema CausalDefend ha sido exitosamente configurado, entrenado y validado. 
   - GAT con 3 capas y 8 attention heads
   - 128 canales ocultos
   - 64 dimensiones de embedding
-  - 1.7M parámetros entrenables
-- **Entrenamiento**:
-  - 10 épocas completadas
-  - 140 grafos de entrenamiento
-  - 30 grafos de validación
-  - Mejor modelo en época 2 (val_loss=0.3318)
-- **Estado**: ✅ Entrenado y validado
+# 🚨 Documento movido
 
-### 2. **CI Tester** (Neural Conditional Independence Test)
-- **Archivo**: `models/ci_tester.ckpt` (66 KB)
-- **Arquitectura**:
-  - Red feedforward de 3 capas
-  - 64 dimensiones de entrada/ocultas
-  - Test de independencia condicional X ⊥ Y | Z
-- **Estado**: ✅ Inicializado y listo
+El registro completo de entrenamientos ahora se mantiene en `docs/status/ENTRENAMIENTO_COMPLETADO.md` junto con el historial actualizado.
 
----
+👉 Consulta la versión vigente con:
 
-## 🔧 Problema Resuelto
-
-### Error Encontrado
-```
-RuntimeError: mat1 and mat2 shapes cannot be multiplied (1x64 and 128x128)
-```
-
-### Causa Raíz
-Discrepancia de dimensiones entre:
-- `graph_embedding` producido por encoder: **64 dimensiones**
-- `feature_decoder` esperaba entrada de: **128 dimensiones** (gru_hidden_dim por defecto)
-
-### Solución Implementada
-**Archivo modificado**: `scripts/train_detector.py`
-
-```python
-# ANTES (implícito, gru_hidden_dim=128 por defecto)
-self.detector = APTDetector(
-    in_channels=in_channels,
-    hidden_channels=hidden_channels,
-    embedding_dim=embedding_dim,
-    num_heads=num_heads,
-    num_layers=num_layers,
-    learning_rate=learning_rate,
-)
-
-# DESPUÉS (explícito, alineado con embedding_dim)
-self.detector = APTDetector(
-    in_channels=in_channels,
-    hidden_channels=hidden_channels,
-    embedding_dim=embedding_dim,
-    gru_hidden_dim=embedding_dim,  # ← FIX: Alineado a 64
-    num_heads=num_heads,
-    num_layers=num_layers,
-    learning_rate=learning_rate,
-)
-```
-
-**Impacto**: Cambio mínimo no invasivo que mantiene la arquitectura original pero corrige el mismatch de dimensiones.
-
----
-
-## 📁 Dataset Generado
-
-**Ubicación**: `data/processed/`
-
-### Composición
-- **Total**: 200 grafos sintéticos de proveniencia
-- **Train**: 140 grafos (70%)
-- **Validation**: 30 grafos (15%)
-- **Test**: 30 grafos (15%)
-
-### Formato por Grafo
-- `graph_X.pkl`: NetworkX DiGraph con estructura
-- `features_X.npy`: Features de nodos (64 dimensiones)
-- `label_X.json`: Etiqueta binaria (ataque/normal)
-
-### Patrones de Ataque Incluidos
-1. **Process Injection**: Procesos maliciosos inyectados
-2. **Lateral Movement**: Movimiento entre hosts
-3. **Data Exfiltration**: Exfiltración de datos sensibles
-4. **Persistence**: Mecanismos de persistencia
-
----
-
-## ✅ Validación Completa
-
-### Scripts de Validación
-1. **`scripts/test_detector_shapes.py`**
-   - Prueba unitaria de dimensiones
-   - Instancia APTDetectorTrainer
-   - Ejecuta training_step con batch sintético
-   - **Resultado**: ✅ PASS - Loss válido sin crashes
-
-2. **`examples/demo_basico.py`**
-   - Demo de 4 componentes principales
-   - Creación de grafos de proveniencia
-   - Red neuronal de detección
-   - Descubrimiento de cadenas causales
-   - Generación de explicaciones
-   - **Resultado**: ✅ PASS - Todas las demos OK
-
----
-
-## 🚀 Próximos Pasos Recomendados
-
-### Inmediato (Listo para usar)
 ```powershell
-# 1. Probar detección completa
-python examples\demo_basico.py
-
-# 2. Ver documentación
-cat README.md
-
-# 3. Explorar pipeline completo (si se corrige import)
-python examples\complete_detection.py
+type docs\status\ENTRENAMIENTO_COMPLETADO.md
 ```
 
-### Mejoras Opcionales
-1. **Entrenamiento Extendido**
-   ```powershell
-   # Entrenamiento completo (50-100 épocas)
-   python scripts\train_detector.py --epochs 100 --batch-size 32
-   
-   # Entrenar CI Tester con datos reales
-   python scripts\train_ci_tester.py --epochs 50
-   ```
-
-2. **Dataset Más Grande**
-   ```powershell
-   # Generar 1000 grafos para mejor generalización
-   python scripts\prepare_dataset_simple.py --num-graphs 1000
-   ```
-
-3. **Evaluación en Test Set**
-   - Implementar script de evaluación
-   - Calcular métricas: Precision, Recall, F1, AUROC
-   - Generar matriz de confusión
-
-4. **Despliegue**
-   - Configurar API REST (FastAPI ya instalado)
-   - Crear contenedor Docker
-   - Implementar monitoreo en tiempo real
-
----
-
-## 📈 Métricas de Entrenamiento
-
-### Detector APT
-| Época | Train Loss | Val Loss | Velocidad |
-|-------|-----------|----------|-----------|
-| 0     | 0.683     | N/A      | 2.2 it/s  |
+Allí encontrarás métricas, enlaces y pasos de seguimiento al día.
 | 2     | 0.457     | **0.332**| 2.4 it/s  |
 | 5     | 0.407     | 0.346    | 2.5 it/s  |
 | 9     | 0.349     | 0.341    | 2.5 it/s  |
@@ -219,8 +80,8 @@ python examples\complete_detection.py
 - `examples/demo_basico.py`: Demo completo de 4 componentes
 
 ### Documentación
-- [`../TRAINING_GUIDE.md`](../TRAINING_GUIDE.md): Guía completa de entrenamiento
-- [`NEXT_STEPS.md`](NEXT_STEPS.md): Roadmap de 11-14 semanas
+- `TRAINING_GUIDE.md`: Guía completa de entrenamiento
+- `NEXT_STEPS.md`: Roadmap de 11-14 semanas
 - `scripts/README.md`: Documentación de scripts
 
 ---
